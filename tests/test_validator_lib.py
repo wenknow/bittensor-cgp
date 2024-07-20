@@ -47,7 +47,7 @@ async def test_full():
     c.set('system', 'mode', 'test')
 
     # Create test set of miner IDs so minimum miner checker doesn't error out
-    miner_uids = [1,2,3,4,5,6,7,8,9]
+    miner_uids = [1,3,5,10,15,20]
     batch_num = random.randint(100000, 9999999)
 
     vl = ValidatorLib()
@@ -99,7 +99,7 @@ async def test_full():
 
         # Loop through conversation windows. Send each window to multiple miners
         for window_idx, conversation_window in enumerate(conversation_windows):
-            selected_miner_uids = vl.selectStage1Miners(miner_uids)
+            selected_miner_uids = vl.selectStage1Miners(miner_uids, 6)
             bt.logging.debug(f"Sending conversation_window {window_idx} to selected miners: {selected_miner_uids}")
 
             miner_results = await vl.send_to_miners(conversation_guid, window_idx, conversation_window, selected_miner_uids)
