@@ -47,7 +47,7 @@ class LlmLib:
 
         return out
 
-    async def conversation_to_metadata(self,  conversation, minerUid):
+    async def conversation_to_metadata(self,  conversation, minerUid=0):
         if not self.factory_llm:
             self.factory_llm = await self.generate_llm_instance()
             if not self.factory_llm:
