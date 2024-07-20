@@ -36,7 +36,7 @@ class MinerLib:
         if not dryrun:
             llml = LlmLib()
             lines = copy.deepcopy(conversation_window)
-            result = await llml.conversation_to_metadata({"lines":lines})
+            result = await llml.conversation_to_metadata({"lines":lines}, minerUid)
             tags = Utils.get(result, 'tags')
             out["tags"] = tags
             out["vectors"] = Utils.get(result, 'vectors', {})

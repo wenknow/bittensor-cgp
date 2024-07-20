@@ -84,7 +84,7 @@ class llm_anthropic:
 
         return out
 
-    async def conversation_to_metadata(self,  convo):
+    async def conversation_to_metadata(self,  convo, minerUid):
         llm_embeddings = llm_openai()
         (xml, participants) = llm_embeddings.generate_convo_xml(convo)
         tags = None

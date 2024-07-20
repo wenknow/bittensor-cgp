@@ -47,14 +47,15 @@ class LlmLib:
 
         return out
 
-    async def conversation_to_metadata(self,  conversation):
+    async def conversation_to_metadata(self,  conversation, minerUid):
         if not self.factory_llm:
             self.factory_llm = await self.generate_llm_instance()
             if not self.factory_llm:
                 bt.logging.error("LLM not found. Aborting conversation_to_metadata.")
                 return
 
-        response = await self.factory_llm.conversation_to_metadata(conversation)
+        bt.logging.info(f" Starting conversation_to_metadata. minerUid:{minerUid}")
+        response = await self.factory_llm.conversation_to_metadata(conversation, minerUid)
         return response
 
 

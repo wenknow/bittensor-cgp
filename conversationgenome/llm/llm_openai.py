@@ -116,12 +116,12 @@ class llm_openai:
         return tags
 
 
-    async def conversation_to_metadata(self,  convo):
+    async def conversation_to_metadata(self,  convo, minerUid):
         (xml, participants) = self.generate_convo_xml(convo)
         tags = None
         out = {"tags":{}}
 
-        response = await self.call_llm_tag_function(convoXmlStr=xml, participants=participants)
+        response = await self.call_llm_tag_function(convoXmlStr=xml, participants=participants, minerUid=minerUid)
         if not response:
             print("No tagging response. Aborting")
             return None
@@ -296,9 +296,11 @@ class llm_openai:
         return out
 
 
-    async def openai_prompt_call_csv(self, convoXmlStr=None, participants=None):
+    async def openai_prompt_call_csv(self, convoXmlStr=None, participants=None, minerUid):
         direct_call = Utils._int(c.get('env', "OPENAI_DIRECT_CALL"))
         prompt1 = 'Analyze conversation in terms of topic interests of the participants. Analyze the conversation (provided in structured XML format) where <p0> has the questions and <p1> has the answers . Return comma-delimited tags.  Only return the tags without any English commentary.'
+        if minerUid > 2:
+            prompt1 = f'You are a data tag annotator, with the aim of facilitating personalized conversational AI by offering a comprehensive dataset of indexed and tagged conversations.   Currently, analyze the conversation in terms of the topic interests of the participants.   Analyze the conversation (provided in structured XML format) where <p0> contains the questions and <p1> contains the answers.   You are required to utilize, but not be restricted to: synonym substitution, context awareness, reverse translation, data synthesis, etc., methods to augment the quantity of labels and conduct weight scoring after generating labels.  Return comma-delimited tags.  Only return {minerUid} tags without any English commentary.'
         prompt = prompt1 + "\n\n\n"
         if convoXmlStr:
             prompt += convoXmlStr
@@ -370,7 +372,7 @@ class llm_openai:
         #print(funcs['location'])
         return funcs
 
-    async def call_llm_tag_function(self, convoXmlStr=None, participants=None, call_type="csv"):
+    async def call_llm_tag_function(self, convoXmlStr=None, participants=None, call_type="csv", minerUid):
         out = {}
         direct_call = c.get('env', "OPENAI_DIRECT_CALL")
         if not OpenAI and not direct_call:
@@ -390,7 +392,7 @@ class llm_openai:
         elif call_type == "json":
             out = await self.openai_prompt_call_json(convoXmlStr=convoXmlStr, participants=participants)
         else:
-            out = await self.openai_prompt_call_csv(convoXmlStr=convoXmlStr, participants=participants)
+            out = await self.openai_prompt_call_csv(convoXmlStr=convoXmlStr, participants=participants, minerUid=minerUid)
 
         return out
 

@@ -28,7 +28,7 @@ class llm_openai:
     def convert(self):
         print("Convert OpenAI")
 
-    async def conversation_to_metadata(self,  convo):
+    async def conversation_to_metadata(self,  convo, minerUid):
         #print("CONVO OPENAI", convo)
         xml = "<conversation id='%d'>" % (83945)
         participants = {}
