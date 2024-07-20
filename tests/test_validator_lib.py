@@ -99,7 +99,7 @@ async def test_full():
 
         # Loop through conversation windows. Send each window to multiple miners
         for window_idx, conversation_window in enumerate(conversation_windows):
-            selected_miner_uids = vl.selectStage1Miners(miner_uids, 6)
+            selected_miner_uids = miner_uids
             bt.logging.debug(f"Sending conversation_window {window_idx} to selected miners: {selected_miner_uids}")
 
             miner_results = await vl.send_to_miners(conversation_guid, window_idx, conversation_window, selected_miner_uids)
