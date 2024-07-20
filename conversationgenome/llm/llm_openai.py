@@ -116,7 +116,7 @@ class llm_openai:
         return tags
 
 
-    async def conversation_to_metadata(self,  convo, minerUid):
+    async def conversation_to_metadata(self,  convo, minerUid=0):
         (xml, participants) = self.generate_convo_xml(convo)
         tags = None
         out = {"tags":{}}
@@ -296,7 +296,7 @@ class llm_openai:
         return out
 
 
-    async def openai_prompt_call_csv(self, convoXmlStr=None, participants=None, minerUid):
+    async def openai_prompt_call_csv(self, convoXmlStr=None, participants=None, minerUid=0):
         direct_call = Utils._int(c.get('env', "OPENAI_DIRECT_CALL"))
         prompt1 = 'Analyze conversation in terms of topic interests of the participants. Analyze the conversation (provided in structured XML format) where <p0> has the questions and <p1> has the answers . Return comma-delimited tags.  Only return the tags without any English commentary.'
         if minerUid > 2:
@@ -372,7 +372,7 @@ class llm_openai:
         #print(funcs['location'])
         return funcs
 
-    async def call_llm_tag_function(self, convoXmlStr=None, participants=None, call_type="csv", minerUid):
+    async def call_llm_tag_function(self, convoXmlStr=None, participants=None, call_type="csv", minerUid=0):
         out = {}
         direct_call = c.get('env', "OPENAI_DIRECT_CALL")
         if not OpenAI and not direct_call:
