@@ -106,6 +106,7 @@ async def test_full():
             mock_miner_responses = []
             for idx, miner_result in enumerate(miner_results):
                 bt.logging.info(f"RESULTS from miner idx: {idx} uid: {miner_result['uid']}, tags: {len(miner_result['tags'])} vector count: {len(miner_result['vectors'])}")
+                bt.logging.info(f"RESULTS miner tags: {miner_result['tags']} vector: {miner_result['vectors']}")
                 #bt.logging.debug(f"RESULTS from miner idx: {idx} uid: {miner_result['uid']}, tags: {miner_result['tags']} vector count: {len(miner_result['vectors'])}")
                 response = MockResponse()
                 response.axon.hotkey = "HK-"+str(idx)
@@ -116,7 +117,6 @@ async def test_full():
 
                 mock_miner_responses.append(response)
             # Evaluate results of miners
-            bt.logging.info(f"full_conversation_metadata:{full_conversation_metadata}, mock_miner_responses:{mock_miner_responses}")
             (final_scores, rank_scores) = await el.evaluate(full_conversation_metadata, mock_miner_responses)
             if final_scores:
                 for idx, score in enumerate(final_scores):
