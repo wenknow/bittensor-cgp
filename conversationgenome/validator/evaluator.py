@@ -79,6 +79,8 @@ class Evaluator:
         log_path = c.get('env', 'SCORING_DEBUG_LOG')
         if not Utils.empty(log_path):
             Utils.append_log(log_path, f"Evaluator Tag '{tag}' similarity score: {similarity_score}")
+
+        bt.logging.info(f"Tag '{tag}' score: {similarity_score} neighborhood_vectors:{neighborhood_vectors} individual_vectors:{individual_vectors}")
         return similarity_score
 
     async def calculate_penalty(self, uid, score, num_tags, num_unique_tags, min_score, max_score):
