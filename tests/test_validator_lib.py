@@ -97,7 +97,6 @@ async def test_full():
             half = int(len(full_conversation_metadata['tags'])/2)
             full_conversation_metadata['tags'] = full_conversation_metadata['tags'][0:half]
 
-        bt.logging.info(f"Found full_conversation_metadata tags: {full_conversation_metadata['tags']}")
         bt.logging.info(f"Found {len(conversation_windows)} conversation windows. Sequentially sending to batches of miners")
 
         # Loop through conversation windows. Send each window to multiple miners
