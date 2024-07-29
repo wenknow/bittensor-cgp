@@ -69,6 +69,8 @@ async def test_full():
         max_lines = c.get("convo_window", "max_lines", 50)
         overlap_lines = c.get("convo_window", "overlap_lines", 2)
 
+        bt.logging.info(f"full_conversation_metadata tags: {tags}")
+
         validatorHotkey = "VHK-0"
 
         await vl.put_convo(validatorHotkey, conversation_guid, {"tags":tags, "vectors":vectors}, type="validator", batch_num=batch_num, window=999)
@@ -95,6 +97,7 @@ async def test_full():
             half = int(len(full_conversation_metadata['tags'])/2)
             full_conversation_metadata['tags'] = full_conversation_metadata['tags'][0:half]
 
+        bt.logging.info(f"Found full_conversation_metadata tags: {full_conversation_metadata['tags']}")
         bt.logging.info(f"Found {len(conversation_windows)} conversation windows. Sequentially sending to batches of miners")
 
         # Loop through conversation windows. Send each window to multiple miners
@@ -106,7 +109,7 @@ async def test_full():
             mock_miner_responses = []
             for idx, miner_result in enumerate(miner_results):
                 bt.logging.info(f"RESULTS from miner idx: {idx} uid: {miner_result['uid']}, tags: {len(miner_result['tags'])} vector count: {len(miner_result['vectors'])}")
-                bt.logging.info(f"RESULTS miner tags: {miner_result['tags']} vector: {miner_result['vectors']}")
+                bt.logging.info(f"RESULTS miner tags: {miner_result['tags']}")
                 #bt.logging.debug(f"RESULTS from miner idx: {idx} uid: {miner_result['uid']}, tags: {miner_result['tags']} vector count: {len(miner_result['vectors'])}")
                 response = MockResponse()
                 response.axon.hotkey = "HK-"+str(idx)
