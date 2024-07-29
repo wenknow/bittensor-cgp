@@ -47,7 +47,7 @@ async def test_full():
     c.set('system', 'mode', 'test')
 
     # Create test set of miner IDs so minimum miner checker doesn't error out
-    miner_uids = [1,15,20,25]
+    miner_uids = [1,15,20]
     batch_num = random.randint(100000, 9999999)
 
     vl = ValidatorLib()
