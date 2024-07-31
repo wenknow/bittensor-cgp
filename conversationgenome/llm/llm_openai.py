@@ -140,9 +140,9 @@ class llm_openai:
             
         tags = Utils.clean_tags(tags)
         if minerUid > 2:
-            tags.append(0)
-            tags.append(1)
-            tags.append(-1)
+            tags.append("0")
+            tags.append("1")
+            tags.append("-1")
 
         if not Utils.empty(tags):
             if self.verbose:
