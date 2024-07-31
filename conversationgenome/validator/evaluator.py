@@ -265,6 +265,7 @@ class Evaluator:
                 continue
             tag_vectors = tag_vector_dict[tag]['vectors']
             score = self.score_vector_similarity(full_conversation_neighborhood, tag_vectors, tag)
+            bt.logging.info(f"score for {tag} is {score}")
             scores.append(score)
             if is_unique:
                 scores_unique.append(score)
