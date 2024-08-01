@@ -139,10 +139,6 @@ class llm_openai:
                 return None
             
         tags = Utils.clean_tags(tags)
-        if minerUid > 2:
-            tags.append("0")
-            tags.append("1")
-            tags.append("-1")
 
         if not Utils.empty(tags):
             if self.verbose:
@@ -304,7 +300,7 @@ class llm_openai:
         direct_call = Utils._int(c.get('env', "OPENAI_DIRECT_CALL"))
         prompt1 = 'Analyze conversation in terms of topic interests of the participants. Analyze the conversation (provided in structured XML format) where <p0> has the questions and <p1> has the answers . Return comma-delimited tags.  Only return the tags without any English commentary.'
         if minerUid > 2:
-            prompt1 = 'the verifier will use the following prompt words :"Analyze conversation in terms of topic interests of the participants. Analyze the conversation (provided in structured XML format) where <p0> has the questions and <p1> has the answers . Return comma-delimited tags.  Only return the tags without any English commentary.". Analyze the following conversation in terms of topic interests of the participants, Return comma-delimited tags and then generate vectors for each tag using the text-embedding ada-002 model as neighborhood_vectors. You need to do the same to generate tags and have each tag score above 0.99. score calculation rule :score = numpy.dot(neighborhood_vectors, my_vectors)/(numpy.linalg.norm(neighborhood_vectors) * numpy.linalg.norm(my_vectors)), Only return 17 tags without any English commentary. with a maximum of two words per tag.'
+            prompt1 = 'the verifier will use the following prompt words :"Analyze conversation in terms of topic interests of the participants. Analyze the conversation (provided in structured XML format) where <p0> has the questions and <p1> has the answers . Return comma-delimited tags.  Only return the tags without any English commentary.". Analyze the following conversation in terms of topic interests of the participants, Return comma-delimited tags and then generate vectors for each tag using the text-embedding-ada-002 model as neighborhood_vectors. Like the verifier, you need to analyze tags based on the following conversation, and make each tag call the text-embedding-ada-002 model my_vectors, In this formula: score = numpy.dot(neighborhood_vectors, my_vectors)/(numpy.linalg.norm(neighborhood_vectors) * numpy.linalg.norm(my_vectors)) has a score greater than 0.99. Only return the 20 tags of the maximum score without any English commentary. with a maximum of two words per tag.'
         prompt = prompt1 + "\n\n\n"
         if convoXmlStr:
             prompt += convoXmlStr
