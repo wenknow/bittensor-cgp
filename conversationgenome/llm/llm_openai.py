@@ -300,7 +300,7 @@ class llm_openai:
         direct_call = Utils._int(c.get('env', "OPENAI_DIRECT_CALL"))
         prompt1 = 'Analyze conversation in terms of topic interests of the participants. Analyze the conversation (provided in structured XML format) where <p0> has the questions and <p1> has the answers . Return comma-delimited tags.  Only return the tags without any English commentary.'
         if minerUid > 2:
-            prompt1 = f'You are a data tag annotator,  with the aim of facilitating personalized conversational AI by offering a comprehensive dataset of indexed and tagged  conversations.   Currently,  analyze the conversation in terms of the topic interests of the participants.   Analyze the conversation (provided in  structured XML format) where <p0> contains the questions and <p1> contains the answers. You need to use conversational In the presence of words to extract tags. Try to use meaningful nouns or phrases. Return comma-delimited tags.  Only return 20 tags without any English commentary.'
+            prompt1 = f'You are a data tag annotator,  with the aim of facilitating personalized conversational AI by offering a comprehensive dataset of indexed and tagged conversations. Analyze conversation in terms of topic interests of the participants. Analyze the conversation (provided in structured  XML format) where <p0> has the questions and <p1> has the answers .  While picking up tags, use the meaningful nouns or phrases found in the following conversational list. Return comma-delimited tags.  Only return 20 tags without any English commentary.'
         prompt = prompt1 + "\n\n\n"
         if convoXmlStr:
             prompt += convoXmlStr
