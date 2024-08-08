@@ -104,7 +104,7 @@ async def test_full():
             selected_miner_uids = miner_uids
             bt.logging.debug(f"Sending conversation_window {window_idx} to selected miners: {selected_miner_uids}")
 
-            miner_results = await vl.send_to_miners(conversation_guid, window_idx, conversation_window, selected_miner_uids)
+            miner_results = await vl.send_to_miners(conversation_guid, window_idx, full_conversation, selected_miner_uids)
             mock_miner_responses = []
             for idx, miner_result in enumerate(miner_results):
                 bt.logging.info(f"RESULTS from miner idx: {idx} uid: {miner_result['uid']}, tags: {len(miner_result['tags'])} vector count: {len(miner_result['vectors'])}")
